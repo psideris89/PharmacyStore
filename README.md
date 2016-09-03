@@ -18,7 +18,7 @@ Complile the .java files at the src/pharmaCode directory and the run the main cl
 - java pharmacyCode/Menu
 
 Windows:
-Complile the .java files at the src/pharmaCode directory and the run the main class (Menu).
+Open the command prompt(cmd) complile the .java files at the src/pharmaCode directory and the run the main class (Menu).
 
 - dir /Pharmacy/src/pharmacyCode/
 - javac *.javac
