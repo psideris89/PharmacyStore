@@ -11,16 +11,16 @@ password: 12345
 ## SETUP
 Linux:
 Complile the .java files at the src/pharmaCode directory and the run the main class (Menu).
-
-- cd /Path/Pharmacy/src/pharmacyCode/
+- Extract to any folder
+- cd /YourFolder/Pharmacy/src/pharmacyCode/
 - javac *.java
 - cd ../
 - java pharmacyCode/Menu
 
 Windows:
 Open the command prompt(cmd) complile the .java files at the src/pharmaCode directory and the run the main class (Menu).
-
-- cd /Pharmacy/src/pharmacyCode/
+- Extract to any folder
+- cd /YourFolder/Pharmacy/src/pharmacyCode/
 - javac *.java
 - cd ../
 - java pharmacyCode/Menu
