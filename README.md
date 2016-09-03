@@ -20,8 +20,8 @@ Complile the .java files at the src/pharmaCode directory and the run the main cl
 Windows:
 Open the command prompt(cmd) complile the .java files at the src/pharmaCode directory and the run the main class (Menu).
 
-- dir /Pharmacy/src/pharmacyCode/
-- javac *.javac
+- cd /Pharmacy/src/pharmacyCode/
+- javac *.java
 - cd ../
 - java pharmacyCode/Menu
 
