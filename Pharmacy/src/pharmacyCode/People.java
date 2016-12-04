@@ -1,8 +1,12 @@
 package pharmacyCode;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 public abstract class People {
 	
-	private String fname, lname;
+	@Getter @Setter private String fname, lname;
 	
 	public People(String fname, String lname) {
 		this.fname = fname;
@@ -10,22 +14,6 @@ public abstract class People {
 	}
 	
 	public abstract void setCodeID();
-	
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-	
-	public String getFname() {
-		return this.fname;
-	}
-	
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
-	
-	public String getLname() {
-		return this.lname;
-	}
 	
 	public void printPerson() {
 		System.out.println("\t\tName: " + this.fname + " " + this.lname);

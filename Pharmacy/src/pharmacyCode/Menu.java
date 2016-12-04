@@ -9,155 +9,78 @@ public class Menu {
 	private static People[] patientAr = new Patient[maxNumber];
 	private static People[] doctorAr = new Doctor[maxNumber];
 	private static Prescription[] prescriptionAr = new Prescription[maxNumber];
-	private static String userName;
-	private static String userCode;
 	
 	public static void main(String[] args) {
 		
 		int choice = 0;
 		boolean cont = true;
-		boolean foundDrug = false;
 		int numOfDrugs = 0, numOfPatients = 0, numOfDoctors = 0, numOfPres = 0;
-		int login_attempts = 0;
 		
 		Scanner reader = new Scanner(System.in);
-		do {
-			if (login_attempts > 0) {
-				System.out.println("\nWrong name/password");
-				System.out.println((3 - login_attempts) + " remaining attempts \n");
-			}
-			System.out.println("==============================");
-			System.out.println("\tLogin");
-			System.out.print("Name: ");
-			userName = reader.next();
-			System.out.print("Password: ");
-			userCode = reader.next();
-			login_attempts++;
 		
-			if(login_attempts == 3) {
-				System.out.println("3 Wrong Attempts --- System is terminating");
-				System.exit(0);
-			}
-		}while(!(userName.equals("testUser")) || !(userCode.equals("12345")));
+		printMenu.login(reader);	// Calling Login method
 		
-		System.out.println("\n\tWelcome " + userName + "\n");
 		while(cont) {
+			boolean cont_funct = true;
 			
-			boolean cont_print = true, cont_delete = true, cont_search = true;
-			
-			System.out.println("==============================");
-			System.out.println("\tMENU");
-			System.out.println();
-			System.out.println("1 -- Add Medicine");
-			System.out.println("2 -- Add Patient");
-			System.out.println("3 -- Add Doctor");
-			System.out.println("4 -- Create Prescription");
-			System.out.println("5 -- Delete Menu");
-			System.out.println("6 -- Search Prescription Menu");
-			System.out.println("7 -- Print Menu");
-			System.out.println("8 -- Exit");
-			System.out.println();
-			System.out.println("==============================");
-			
-			do {
-				System.out.print("Enter your choice (1-8): ");
-				choice = reader.nextInt();
-			}while((choice < 1) || (choice > 8));
-			
+			choice = printMenu.mainMenu(reader);
 			System.out.println();
 			
 			switch(choice) {
 			case 1:
 				if(Drugs.getDrugsTotal() < maxNumber) {
-					String drugName;
-					double drugPrice;
-					boolean drugInList = false;
-					
 					System.out.print("\t\tInsert Medicine's Name: ");
-					drugName = reader.next();
+					String drugName = reader.next();
 					System.out.print("\t\tInsert Price: ");
-					drugPrice = reader.nextDouble();
+					double drugPrice = reader.nextDouble();
 					
-					for(int i = 0; i < Drugs.getDrugsTotal(); i++) {
-						if(drugName.equalsIgnoreCase(drugAr[i].getDrugName())) {
-							System.out.println("\n\t\tError --- An entry already exists with the same name");
-							drugInList = true;
-						}
-					}
-					if (!drugInList) {
+					if (!CheckArray.booleanCheckList(drugAr, drugName)) {
 						drugAr[numOfDrugs] = new Drugs(drugName, drugPrice);
-						drugAr[numOfDrugs].setDrugID();
 						numOfDrugs++;
 						
 						System.out.println("\n\t\tMedicine Added");
 					}
-				}
-				else {
+				}else {
 					System.out.println("\n\t\tWARNING\n\t\tThe list of Medicines is Full --- Delete to proceed\n");
 				}
-				
 				break;
 				
 			case 2:
 				if(Patient.getPatientsTotal() < maxNumber) {
-					String patFname;
-					String patLname;
-					boolean patientInList = false;
-					
 					System.out.print("\t\tInsert Patient's First Name: ");
-					patFname = reader.next();
+					String patFname = reader.next();
 					System.out.print("\t\tInsert Patient's Last Name: ");
-					patLname = reader.next();
+					String patLname = reader.next();
 					
-					for(int i = 0; i < Patient.getPatientsTotal(); i++) {
-						if(patFname.equalsIgnoreCase(patientAr[i].getFname()) && patLname.equalsIgnoreCase(patientAr[i].getLname())) {
-							System.out.println("\n\t\tError --- An entry already exists with the same name");
-							patientInList = true;
-						}
-					}
-					if(!patientInList) {
+					if(!CheckArray.booleanCheckListPat(patientAr, patFname, patLname)) {
 						patientAr[numOfPatients] = new Patient(patFname, patLname);
 						((Patient)patientAr[numOfPatients]).setCodeID();
 						numOfPatients++;
 						
 						System.out.println("\n\t\tPatient Added");
 					}
-				}
-				else {
+				}else {
 					System.out.println("\n\t\tWARNING\n\t\tThe list of Patients is Full --- Delete to proceed\n");
 				}
-				
 				break;
 				
 			case 3:
 				if(Doctor.getDoctorsTotal() < maxNumber) {
-					String docFname;
-					String docLname;
-					boolean doctorInList = false;
-					
 					System.out.print("\t\tInsert Doctor's First Name: ");
-					docFname = reader.next();
+					String docFname = reader.next();
 					System.out.print("\t\tInsert Doctor's Last Name: ");
-					docLname = reader.next();
+					String docLname = reader.next();
 					
-					for(int i = 0; i < Doctor.getDoctorsTotal(); i++) {
-						if(docFname.equalsIgnoreCase(doctorAr[i].getFname()) && docLname.equalsIgnoreCase(doctorAr[i].getLname())) {
-							System.out.println("\n\t\tError --- An entry already exists with the same name");
-							doctorInList = true;
-						}
-					}
-					if(!doctorInList) {
+					if(!CheckArray.booleanCheckListDoc(doctorAr, docFname, docLname)) {
 						doctorAr[numOfDoctors] = new Doctor(docFname, docLname);
 						((Doctor)doctorAr[numOfDoctors]).setCodeID();
 						numOfDoctors++;
 						
 						System.out.println("\n\t\tDoctor Added");
 					}					
-				}
-				else {
+				}else {
 					System.out.println("\n\t\tWARNING\n\t\tThe list of Doctors is Full --- Delete to proceed\n");
 				}
-				
 				break;
 				
 			case 4:
@@ -172,6 +95,7 @@ public class Menu {
 					int indexPat = -1;
 					boolean foundDoc = false;
 					boolean foundPat = false;
+					boolean foundDrug = false;
 					
 					System.out.print("\t\tInsert Prescription's Doctor First Name: ");
 					presDocFname = reader.next();
@@ -262,20 +186,12 @@ public class Menu {
 				break;
 				
 			case 5:
-				while(cont_delete) {
+				while(cont_funct) {
 					
 					int indexDrugDelete = -1, indexPatientDelete = -1, indexDoctorDelete = -1, indexPresDelete = -1;
 					boolean foundDrugDelete = false, foundPatientDelete = false, foundDoctorDelete = false, foundPresDelete = false;
 					
-					System.out.println("==============================");
-					System.out.println("\tDELETE MENU");
-					System.out.println();
-					System.out.println("1 -- Delete Medicine");
-					System.out.println("2 -- Delete Patient");
-					System.out.println("3 -- Delete Doctor");
-					System.out.println("4 -- Delete Prescription");
-					System.out.println("5 -- Return to Main Menu");
-					System.out.println("\nEnter your choice (1-5): ");
+					printMenu.deleteMenu();
 					
 					int choice3 = reader.nextInt();
 					
@@ -392,7 +308,7 @@ public class Menu {
 						break;
 						
 					case 5:
-						cont_delete = false;
+						cont_funct = false;
 						break;
 						
 					default:
@@ -403,18 +319,11 @@ public class Menu {
 				
 				break;
 			case 6:
-				while(cont_search) {
+				while(cont_funct) {
 					
 					boolean foundSearch = false;
 					
-					System.out.println("==============================");
-					System.out.println("\tPRESCRIPTION SEARCH MENU");
-					System.out.println();
-					System.out.println("1 -- Search by Doctor Name");
-					System.out.println("2 -- Search by Patient's ID");
-					System.out.println("3 -- Search by Date");
-					System.out.println("4 -- Return to Main Menu");
-					System.out.print("\nEnter your choice (1-4): ");
+					printMenu.searchMenu();
 					
 					int choice4 = reader.nextInt();
 					
@@ -461,33 +370,11 @@ public class Menu {
 						break;
 						
 					case 3:
-						/*
-						System.out.print("Insert Patient's AMKA Code: ");
-						Date startyDate = reader.next();
-						Date finishDate = reader.next();
-						
-						if(todayDate.after(historyDate) && todayDate.before(futureDate)) {
-						    // In between
-						}
-						
-						for(int i = 0; i < numOfPres; i++) {
-							if( searchPatientAMKA == prescriptionAr[i].getPresPatientAMKA()) {
-								System.out.println("==============================");
-								prescriptionAr[i].printAllPrescriptions();
-								foundSearch = true;
-							}
-						}
-						if(!foundSearch) {
-							System.out.println("==============================");
-							System.out.println("\nNo Prescription with this Patient's AMKA Code.\n");
-							System.out.println("==============================");
-						}
-						*/
 						System.out.println("\t\tStill in Progress!!");
 						break;
 						
 					case 4:
-						cont_search = false;
+						cont_funct = false;
 						break;
 						
 					default:
@@ -498,101 +385,39 @@ public class Menu {
 				
 				break;
 			case 7:
-				
-				while(cont_print) {
-					
-					System.out.println("==============================");
-					System.out.println("\tPRINT MENU");
-					System.out.println();
-					System.out.println("1 -- Print Medicines");
-					System.out.println("2 -- Print Patients");
-					System.out.println("3 -- Print Doctors");
-					System.out.println("4 -- Print Prescriptions");
-					System.out.println("5 -- Return to Main Menu");
-					System.out.print("\nEnter your choice (1-5): ");
+				while(cont_funct) {
+					printMenu.printMenuAll();
 					
 					int choice2 = reader.nextInt();
-					
 					switch(choice2) {
 					case 1:
-						System.out.println("\t\t==============================");
-						System.out.println("\t\t\tMEDICINES LIST");
-						if(Drugs.getDrugsTotal() == 0) {
-							System.out.println("\n\t\tEmpty List\n");
-						}
-						else {
-							for(int i = 0; i < Drugs.getDrugsTotal(); i++) {
-								System.out.println();
-								drugAr[i].printDrug();
-							}
-						}
-						
+						printMenu.printMedicines(drugAr);
 						break;
-						
 					case 2:
-						System.out.println("\t\t==============================");
-						System.out.println("\t\t\tPATIENTS LIST");
-						if(numOfPatients == 0) {
-							System.out.println("\n\t\tEmpty List\n");
-						}
-						else {
-							for(int i = 0; i < Patient.getPatientsTotal(); i++) {
-								System.out.println();
-								patientAr[i].printPerson();
-							}
-						}
-						
+						printMenu.printPatients(patientAr);
 						break;
-						
 					case 3:
-						System.out.println("\t\t==============================");
-						System.out.println("\t\t\tDOCTORS LIST");
-						if(numOfDoctors == 0) {
-							System.out.println("\n\t\tEmpty List\n");
-						}
-						else {
-							for(int i = 0; i < Doctor.getDoctorsTotal(); i++) {
-								System.out.println();
-								doctorAr[i].printPerson();
-							}
-						}
-						
+						printMenu.printDoctors(doctorAr);
 						break;
-						
 					case 4:
-						System.out.println("\t\t==============================");
-						System.out.println("\t\t\tPRESCRIPTIONS LIST");
-						if(numOfPres == 0) {
-							System.out.println("\n\t\tEmpty List\n");
-						}
-						else {
-							for(int i = 0; i < Prescription.getPrescriptionsTotal(); i++) {
-								System.out.println();
-								prescriptionAr[i].printAllPrescriptions();
-							}
-						}
-						
+						printMenu.printPrescriptions(prescriptionAr);
 						break;
-						
 					case 5:
-						cont_print = false;
+						cont_funct = false;
 						break;
 					default:
 						System.out.println("Error --- Wrong Input");
 						break;
 					}
 				}
-				
 				break;
+				
 			case 8:
 				System.out.println("\n\n-------- System Terminated --------");
 				cont = false;
 				break;
 			}
 		}
-		
 		reader.close();
-	}
-	
-	
+	}	
 }
