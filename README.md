@@ -1,4 +1,4 @@
-# Pharmacy version 1.0
+# Pharmacy version 1.0.1
 
 ## DESCRIPTION
 A java program that provides a managing system for a pharmacy store.
